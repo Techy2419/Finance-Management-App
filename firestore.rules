@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Match users collection
+    match /users/{userId} {
+      // Allow read and write only if the authenticated user is accessing their own document
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Match profiles collection
+    match /profiles/{profileId} {
+      // Allow read if user is authenticated and owns the profile
+      allow read: if request.auth != null && 
+                  resource.data.userId == request.auth.uid;
+      
+      // Allow create if user is authenticated and sets themselves as owner
+      allow create: if request.auth != null && 
+                   request.resource.data.userId == request.auth.uid;
+      
+      // Allow update if user owns the profile and isn't changing ownership
+      allow update: if request.auth != null && 
+                   resource.data.userId == request.auth.uid &&
+                   request.resource.data.userId == resource.data.userId;
+      
+      // Allow delete if user owns the profile
+      allow delete: if request.auth != null && 
+                   resource.data.userId == request.auth.uid;
+                   
+      // Match expenses subcollection
+      match /expenses/{expenseId} {
+        allow read: if request.auth != null && 
+                   get(/databases/$(database)/documents/profiles/$(profileId)).data.userId == request.auth.uid;
+        
+        allow create: if request.auth != null && 
+                     get(/databases/$(database)/documents/profiles/$(profileId)).data.userId == request.auth.uid;
+        
+        allow update, delete: if request.auth != null && 
+                             get(/databases/$(database)/documents/profiles/$(profileId)).data.userId == request.auth.uid;
+      }
+    }
+  }
+}

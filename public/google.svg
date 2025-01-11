@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="18px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.168 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"/>
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"/>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter2" result="shadowBlurOuter2"/>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.084 0" in="shadowBlurOuter2" type="matrix" result="shadowMatrixOuter2"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="logo_googleg_48dp" filter="url(#filter-1)" fill="none" fill-rule="evenodd">
+        <path d="M9.827 24c0-.97.177-1.905.496-2.775L3.352 15.21C1.884 17.925 1 21.035 1 24.214c0 3.097.84 6.134 2.331 8.803l6.95-6.157A9.563 9.563 0 0 1 9.827 24" fill="#FBBC05"/>
+        <path d="M23.5 10.714c2.855 0 5.405 1.117 7.389 2.91l5.95-5.95C33.252 4.347 28.643 2 23.5 2c-7.713 0-14.396 4.564-17.418 11.21l6.971 6.015c1.584-4.753 6.071-8.511 11.447-8.511" fill="#EA4335"/>
+        <path d="M23.5 37.286c-5.376 0-9.863-3.758-11.447-8.511l-6.971 6.015C8.104 41.436 14.787 46 23.5 46c4.977 0 9.718-2.192 12.926-6.273l-6.673-5.729c-1.84 2.07-4.308 3.288-7.253 3.288" fill="#34A853"/>
+        <path d="M45 24.214c0-1.494-.234-3.105-.664-4.597H23.5v9.814h12.128c-.555 2.883-2.23 5.32-4.743 6.942l6.673 5.729C42.114 37.545 45 31.43 45 24.214" fill="#4285F4"/>
+    </g>
+</svg>
