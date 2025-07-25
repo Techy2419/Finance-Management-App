@@ -16,6 +16,7 @@ interface Profile {
 interface ProfileContextType {
   profiles: Profile[];
   loading: boolean;
+  error: string | null;
   activeProfile: Profile | null;
   createProfile: (profile: Omit<Profile, 'id' | 'userId'>) => Promise<void>;
   updateProfile: (id: string, profile: Partial<Profile>) => Promise<void>;
@@ -29,11 +30,13 @@ const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeProfile, setActiveProfile] = useState<Profile | null>(null);
   const { user } = useAuth();
 
   const loadProfiles = async (userId: string) => {
     try {
+      setError(null);
       const userProfiles = await getProfiles(userId);
       setProfiles(userProfiles);
       if (userProfiles.length > 0 && !activeProfile) {
@@ -42,6 +45,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error('Error loading profiles:', error);
       setProfiles([]);
+      setError('Failed to load profiles. Please try again.');
       if (error instanceof FirebaseError) {
         console.error('Firebase error:', error.code, error.message);
       }
@@ -144,6 +148,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const value = {
     profiles,
     loading,
+    error,
     activeProfile,
     createProfile: handleCreateProfile,
     updateProfile: handleUpdateProfile,
