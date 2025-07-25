@@ -102,9 +102,9 @@ export function PaymentMethodsChart({ expenses }: PaymentMethodsChartProps) {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {chartData.map((entry, index) => (
+                {chartData.map((entry, _index) => (
                   <Cell 
-                    key={`cell-${index}`} 
+                    key={`cell-${_index}`} 
                     fill={colors[entry.name.toLowerCase() as keyof typeof colors]} 
                   />
                 ))}

@@ -10,19 +10,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProfileWizard } from '@/components/profile-wizard';
 import { ProfileEditDialog } from '@/components/profile-edit-dialog';
-import { Loader2, Plus, User2, LogOut, Settings } from 'lucide-react';
+import { Loader2, Plus, User2, LogOut } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sun, Moon, Laptop } from 'lucide-react';
 
 export default function ProfilesPage() {
@@ -68,12 +65,12 @@ export default function ProfilesPage() {
     router.push('/expenses');
   };
 
-  const handleSignOut = async () => {
+  const handleSignOut = async (): Promise<void> => {
     try {
       await signOutUser();
       router.push('/');
-    } catch (error) {
-      console.error('Error signing out:', error);
+    } catch (err) {
+      console.error('Error signing out:', err);
     }
   };
 

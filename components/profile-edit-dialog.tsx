@@ -76,11 +76,11 @@ export function ProfileEditDialog({ profile, open, onOpenChange }: ProfileEditDi
       });
 
       onOpenChange(false);
-    } catch (error) {
-      console.error('Error updating profile:', error);
+    } catch (err) {
+      console.error('Error updating profile:', err);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to update profile",
+        description: err instanceof Error ? err.message : "Failed to update profile",
         variant: "destructive",
       });
     } finally {

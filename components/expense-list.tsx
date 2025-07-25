@@ -25,11 +25,11 @@ import { useExpense } from '@/contexts/ExpenseContext';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Timestamp } from 'firebase/firestore';
 
-interface ExpenseViewControlsProps {
+interface ExpenseListProps {
   expenses: Expense[];
 }
 
-export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps) {
+export function ExpenseList({ expenses = [] }: ExpenseListProps) {
   const [sortField, setSortField] = useState<string>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,6 +82,12 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
       return 'Invalid date';
     }
     return format(date.toDate(), 'MMM d, yyyy');
+  };
+
+  const handleDelete = (expenseId: string) => {
+    if (expenseId) {
+      removeExpense(expenseId);
+    }
   };
 
   return (
@@ -145,15 +151,19 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
                         variant="outline"
                         size="icon"
                         onClick={() => {
-                          // Handle edit
+                          // Handle edit functionality
                         }}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="outline" size="icon">
-                            <Trash2 className="h-4 w-4" />
+                          <Button 
+                            variant="destructive" 
+                            size="sm"
+                            onClick={() => expense.id && handleDelete(expense.id)}
+                          >
+                            Delete
                           </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
@@ -166,7 +176,7 @@ export function ExpenseViewControls({ expenses = [] }: ExpenseViewControlsProps)
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              onClick={() => removeExpense(expense.id)}
+                              onClick={() => expense.id && handleDelete(expense.id)}
                             >
                               Delete
                             </AlertDialogAction>

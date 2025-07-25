@@ -6,7 +6,6 @@ import {
   DialogContent, 
   DialogHeader, 
   DialogTitle, 
-  DialogDescription, 
   DialogFooter 
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -25,11 +24,10 @@ import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface ProfileWizardProps {
-  children?: React.ReactNode;
   onClose?: () => void;
 }
 
-export function ProfileWizard({ children, onClose }: ProfileWizardProps) {
+export function ProfileWizard({ onClose }: ProfileWizardProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
@@ -66,8 +64,8 @@ export function ProfileWizard({ children, onClose }: ProfileWizardProps) {
       setOpen(false);
       if (onClose) onClose();
       router.push('/expenses');
-    } catch (error) {
-      console.error('Error creating profile:', error);
+    } catch (err) {
+      console.error('Error creating profile:', err);
       toast({
         variant: "destructive",
         title: "Error",
@@ -80,11 +78,6 @@ export function ProfileWizard({ children, onClose }: ProfileWizardProps) {
 
   return (
     <>
-      {children && (
-        <div onClick={() => setOpen(true)}>
-          {children}
-        </div>
-      )}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <form onSubmit={handleSubmit}>

@@ -50,8 +50,8 @@ export function UserInfoDialog({ open, onOpenChange, userId, onComplete }: UserI
       
       await onComplete();
       onOpenChange(false);
-    } catch (error) {
-      console.error('Error updating user info:', error);
+    } catch (err) {
+      console.error('Error updating user info:', err);
       toast({
         title: "Error",
         description: "Failed to update your information",

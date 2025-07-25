@@ -8,14 +8,12 @@ import {
   getDocs,
   query,
   where,
-  orderBy,
   Timestamp,
   serverTimestamp,
   Query,
   DocumentData
 } from 'firebase/firestore';
 
-export type PaymentMethod = 'cash' | 'debit' | 'credit';
 
 export interface Expense {
   id?: string;
@@ -38,8 +36,8 @@ export async function createExpense(expense: Omit<Expense, 'id' | 'createdAt' | 
     const expenseData = {
       ...expense,
       paymentMethod: expense.paymentMethod || 'cash', // Default to cash
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     const profileDoc = doc(firestore, PROFILES_COLLECTION, expense.profileId);
@@ -102,7 +100,7 @@ export async function updateExpense(
     
     const updateData = {
       ...updates,
-      updatedAt: serverTimestamp(),
+      updatedAt: new Date(),
     };
 
     await updateDoc(expenseRef, updateData);

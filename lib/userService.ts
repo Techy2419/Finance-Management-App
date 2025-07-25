@@ -74,10 +74,9 @@ export async function updateUserInfo(userId: string, data: Partial<UserInfo>) {
         updatedAt: now,
       });
     }
-    console.log('User info updated:', data);
-  } catch (error) {
-    console.error('Error updating user info:', error);
-    throw error;
+  } catch (err) {
+    console.error('Error updating user info:', err);
+    throw err;
   }
 }
 

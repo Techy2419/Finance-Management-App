@@ -8,10 +8,7 @@ import {
   deleteDoc, 
   query, 
   where,
-  serverTimestamp,
-  Timestamp,
-  DocumentReference,
-  DocumentData
+  Timestamp
 } from 'firebase/firestore';
 
 export interface Profile {
@@ -36,8 +33,8 @@ export async function createProfile(profile: Omit<Profile, 'id' | 'createdAt' | 
     const profileData = {
       ...profile,
       name: profile.name.trim(),
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
     
     // Log the profile data being sent to Firestore (excluding sensitive info)
@@ -53,9 +50,9 @@ export async function createProfile(profile: Omit<Profile, 'id' | 'createdAt' | 
       id: docRef.id, 
       ...profile,
     } as Profile;
-  } catch (error) {
-    console.error('Error in profileService.createProfile:', error);
-    throw error; // Let the context handle the error
+  } catch (err) {
+    console.error('Error in profileService.createProfile:', err);
+    throw err; // Let the context handle the error
   }
 }
 
@@ -71,9 +68,9 @@ export async function getProfiles(userId: string) {
       id: doc.id,
       ...doc.data(),
     })) as Profile[];
-  } catch (error) {
-    console.error('Error getting profiles:', error);
-    throw error;
+  } catch (err) {
+    console.error('Error getting profiles:', err);
+    throw err;
   }
 }
 
@@ -82,7 +79,7 @@ export async function updateProfile(profileId: string, updates: Partial<Profile>
     const profileRef = doc(firestore, PROFILES_COLLECTION, profileId);
     const updatedData = {
       ...updates,
-      updatedAt: serverTimestamp(),
+      updatedAt: new Date(),
     };
     
     await updateDoc(profileRef, updatedData);
@@ -90,9 +87,9 @@ export async function updateProfile(profileId: string, updates: Partial<Profile>
       id: profileId,
       ...updates, // Return the updated fields without timestamp
     } as Profile;
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    throw error;
+  } catch (err) {
+    console.error('Error updating profile:', err);
+    throw err;
   }
 }
 
@@ -100,8 +97,8 @@ export async function deleteProfile(profileId: string) {
   try {
     const profileRef = doc(firestore, PROFILES_COLLECTION, profileId);
     await deleteDoc(profileRef);
-  } catch (error) {
-    console.error('Error deleting profile:', error);
-    throw error;
+  } catch (err) {
+    console.error('Error deleting profile:', err);
+    throw err;
   }
 }

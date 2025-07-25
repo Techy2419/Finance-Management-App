@@ -15,7 +15,7 @@ import { MonthlyExpenseSummary } from '@/components/monthly-expense-summary';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function ExpensesPage() {
-  const { expenses, loading, selectedYear, selectedMonth, setSelectedMonth, setSelectedYear, refreshExpenses } = useExpense();
+  const { expenses, selectedYear, selectedMonth, setSelectedMonth, setSelectedYear, refreshExpenses } = useExpense();
   const { activeProfile } = useProfile();
   const { user } = useAuth();
   const router = useRouter();
