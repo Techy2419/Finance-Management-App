@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "eslint": "^9.31.0",
     "start-server-and-test": "^2.0.9"
   }
 }
