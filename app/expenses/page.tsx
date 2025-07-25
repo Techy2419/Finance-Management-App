@@ -74,7 +74,7 @@ export default function ExpensesPage() {
 
           <PaymentMethodsChart expenses={expenses} />
           
-          <MonthlyExpenseSummary profileId={activeProfile.id} />
+          {activeProfile?.id && <MonthlyExpenseSummary profileId={activeProfile.id} />}
         </div>
 
         <div className="space-y-8">
